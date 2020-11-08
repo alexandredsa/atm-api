@@ -2,6 +2,14 @@
 
 ## About
 
+## Available Commands
+
+The project has a Makefile with the following commands.
+- run: Run API at port 8080
+- test
+- coverage: Coverage output at `./cover.html`
+
+
 ## Endpoints
 
 ### POST - /withdrawals
