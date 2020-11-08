@@ -33,15 +33,16 @@ func (b *BanknoteDataService) Withdrawal(value int) []models.BanknoteData {
 //ConvertValuesToBanknotes receives an slice of values and convert it to slice of BanknoteData
 func (b *BanknoteDataService) ConvertValuesToBanknotes(values []int16) (banknotes []models.BanknoteData) {
 	for i := 0; i < len(values); i++ {
-		if len(banknotes) == 0 {
-			banknotes = append(banknotes, models.BanknoteData{Value: values[i], Quantity: 1})
-		} else {
-			for j := 0; j < len(banknotes); j++ {
-				if banknotes[j].Value == values[i] {
-					banknotes[j].Quantity = banknotes[j].Quantity + 1
-					break
-				}
+		for j := 0; j <= len(banknotes); j++ {
+			if j == len(banknotes) {
+				banknotes = append(banknotes, models.BanknoteData{Value: values[i], Quantity: 1})
+				break
 			}
+			if banknotes[j].Value == values[i] {
+				banknotes[j].Quantity = banknotes[j].Quantity + 1
+				break
+			}
+
 		}
 	}
 
