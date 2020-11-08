@@ -15,11 +15,19 @@ func TestWithdrawal(t *testing.T) {
 	expectedBanknotes := []models.BanknoteData{
 		{
 			Value:    50,
-			Quantity: 4,
+			Quantity: 3,
+		},
+		{
+			Value:    10,
+			Quantity: 2,
+		},
+		{
+			Value:    1,
+			Quantity: 2,
 		},
 	}
 
-	banknotes := banknoteDataService.Withdrawal(200)
+	banknotes := banknoteDataService.Withdrawal(172)
 
 	if !reflect.DeepEqual(expectedBanknotes, banknotes) {
 		t.Errorf("Error on Withdrawal method; expected %v, got %v", expectedBanknotes, banknotes)
