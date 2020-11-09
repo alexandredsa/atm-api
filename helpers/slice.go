@@ -6,8 +6,8 @@ import "sort"
 type Slice struct {
 }
 
-//SortDesc sort slice of values int8 descending
-func (s Slice) SortDesc(values []int16) {
+//SortDesc sort slice of values int descending
+func (s Slice) SortDesc(values []int) {
 	sort.Slice(values, func(i, j int) bool {
 		return values[i] > values[j]
 	})

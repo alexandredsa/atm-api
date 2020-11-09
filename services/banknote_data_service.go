@@ -18,39 +18,19 @@ func CreateBanknoteService(withdrawalRepository withdrawal.BaseRepository) Bankn
 
 //Withdrawal receive value and calculate which and how many notes will return
 func (b *BanknoteDataService) Withdrawal(value int) (*[]models.BanknoteData, *error) {
-	bankNotesValues := make([]int16, 0)
+	banknoteDatas := make([]models.BanknoteData, 0)
 	availableBankNotesValues := b.WithdrawalRepository.GetAvailableBanknotesValues()
 	helpers.Slice{}.SortDesc(availableBankNotesValues)
-
-	i := 0
 	for value > 0 {
-		for value >= int(availableBankNotesValues[i]) {
-			bankNotesValues = append(bankNotesValues, availableBankNotesValues[i])
-			value = value - int(availableBankNotesValues[i])
-		}
-
-		i = i + 1
-	}
-
-	return b.ConvertValuesToBanknotes(bankNotesValues), nil
-}
-
-//ConvertValuesToBanknotes receives an slice of values and convert it to slice of BanknoteData
-func (b *BanknoteDataService) ConvertValuesToBanknotes(values []int16) *[]models.BanknoteData {
-	banknotes := make([]models.BanknoteData, 0)
-	for i := 0; i < len(values); i++ {
-		for j := 0; j <= len(banknotes); j++ {
-			if j == len(banknotes) {
-				banknotes = append(banknotes, models.BanknoteData{Value: values[i], Quantity: 1})
-				break
+		for _, availableBanknote := range availableBankNotesValues {
+			residual := value % availableBanknote
+			if residual != value {
+				quantity := value / availableBanknote
+				banknoteDatas = append(banknoteDatas, models.BanknoteData{Value: int16(availableBanknote), Quantity: int16(quantity)})
+				value = residual
 			}
-			if banknotes[j].Value == values[i] {
-				banknotes[j].Quantity = banknotes[j].Quantity + 1
-				break
-			}
-
 		}
 	}
 
-	return &banknotes
+	return &banknoteDatas, nil
 }
