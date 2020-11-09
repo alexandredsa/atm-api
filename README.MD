@@ -22,8 +22,9 @@ The project has a Makefile with the following commands.
 }
 ```
 
-#### Response 
+#### Responses 
 
+- `201` - Created
 ```
 {
   "banknotes": [
@@ -38,3 +39,5 @@ The project has a Makefile with the following commands.
   ]
 }
 ```
+
+- `400` - Bad Request

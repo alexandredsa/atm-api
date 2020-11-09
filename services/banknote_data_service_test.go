@@ -27,9 +27,9 @@ func TestWithdrawal(t *testing.T) {
 		},
 	}
 
-	banknotes := banknoteDataService.Withdrawal(172)
+	banknotes, _ := banknoteDataService.Withdrawal(172)
 
-	if !reflect.DeepEqual(expectedBanknotes, banknotes) {
+	if !reflect.DeepEqual(&expectedBanknotes, banknotes) {
 		t.Errorf("Error on Withdrawal method; expected %v, got %v", expectedBanknotes, banknotes)
 	}
 }
