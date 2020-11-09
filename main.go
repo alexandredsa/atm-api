@@ -22,7 +22,8 @@ func initDotEnv() {
 }
 
 func initAPI() {
-	routes := []routes.BaseRoutes{routes.WithdrawalRoutes{}}
+	withdrawalRoutes := InitializeWithdrawalRoutes()
+	routes := []routes.BaseRoutes{withdrawalRoutes}
 	server := api.Server{Routes: routes}
 	r := server.SetupRoutes()
 	r.Run(":" + os.Getenv("APP_PORT"))

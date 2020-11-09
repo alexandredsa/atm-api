@@ -11,6 +11,11 @@ type BanknoteDataService struct {
 	WithdrawalRepository withdrawal.BaseRepository
 }
 
+//CreateBanknoteService returns a new instance of BanknoteDataService
+func CreateBanknoteService(withdrawalRepository withdrawal.BaseRepository) BanknoteDataService {
+	return BanknoteDataService{WithdrawalRepository: withdrawalRepository}
+}
+
 //Withdrawal receive value and calculate which and how many notes will return
 func (b *BanknoteDataService) Withdrawal(value int) (*[]models.BanknoteData, *error) {
 	bankNotesValues := make([]int16, 0)

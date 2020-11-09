@@ -7,7 +7,12 @@ import (
 
 //WithdrawalRoutes manage withdrawal endpoints
 type WithdrawalRoutes struct {
-	Controller *controllers.WithdrawalController
+	Controller controllers.WithdrawalController
+}
+
+//CreateWithdrawalRoutes returns a new instance of CreateWithdrawalRoutes
+func CreateWithdrawalRoutes(controller controllers.WithdrawalController) WithdrawalRoutes {
+	return WithdrawalRoutes{Controller: controller}
 }
 
 //Setup routes for withdrawal endpoints

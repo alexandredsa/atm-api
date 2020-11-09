@@ -11,6 +11,11 @@ type WithdrawalController struct {
 	BanknoteDataService services.BanknoteDataService
 }
 
+//CreateWithdrawalController returns a new instance of WithdrawalController
+func CreateWithdrawalController(banknoteDataService services.BanknoteDataService) WithdrawalController {
+	return WithdrawalController{BanknoteDataService: banknoteDataService}
+}
+
 //New func to calculate new Withdrawal
 func (w *WithdrawalController) New(ctx *gin.Context) {
 	payload := dtos.WithdrawalNewRequest{}
