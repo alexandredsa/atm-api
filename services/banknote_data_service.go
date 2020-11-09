@@ -7,6 +7,7 @@ import (
 	"atm-api.com/helpers"
 	"atm-api.com/models"
 	"atm-api.com/repositories/withdrawal"
+	log "github.com/sirupsen/logrus"
 )
 
 //BanknoteDataService handle ATM basic operations
@@ -22,18 +23,21 @@ func CreateBanknoteService(withdrawalRepository withdrawal.BaseRepository) Bankn
 //Withdrawal receive value and calculate which and how many notes will return
 func (b *BanknoteDataService) Withdrawal(value int) (*[]models.BanknoteData, error) {
 	banknoteDatas := make([]models.BanknoteData, 0)
+	valueLeftOver := value
 	availableBankNotesValues := b.WithdrawalRepository.GetAvailableBanknotesValues()
+	log.Debugf("Retrieved available bank notes: %v", availableBankNotesValues)
 	helpers.Slice{}.SortDesc(availableBankNotesValues)
 	for _, availableBanknote := range availableBankNotesValues {
-		residual := value % availableBanknote
-		if residual != value {
-			quantity := value / availableBanknote
+		residual := valueLeftOver % availableBanknote
+		if residual != valueLeftOver {
+			quantity := valueLeftOver / availableBanknote
 			banknoteDatas = append(banknoteDatas, models.BanknoteData{Value: int16(availableBanknote), Quantity: int16(quantity)})
-			value = residual
+			valueLeftOver = residual
 		}
 	}
 
-	if value > 0 {
+	if valueLeftOver > 0 {
+		log.Errorf("Value not supported. Value: %v | Left Over: %v", value, valueLeftOver)
 		return nil, &exceptions.UnsupportedValueError{
 			Reason: fmt.Sprintf("Withdrawal not supported for value, left over: %v", value),
 		}
