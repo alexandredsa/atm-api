@@ -6,6 +6,7 @@ import (
 
 	"atm-api.com/api"
 	"atm-api.com/api/routes"
+	"atm-api.com/helpers"
 	"github.com/joho/godotenv"
 )
 
@@ -22,6 +23,7 @@ func initDotEnv() {
 }
 
 func initAPI() {
+	helpers.Logger{}.Init()
 	withdrawalRoutes := InitializeWithdrawalRoutes()
 	routes := []routes.BaseRoutes{withdrawalRoutes}
 	server := api.Server{Routes: routes}
