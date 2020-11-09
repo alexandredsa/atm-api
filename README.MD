@@ -40,4 +40,16 @@ The project has a Makefile with the following commands.
 }
 ```
 
-- `400` - Bad Request
+- `422` - Unprocessable Entity
+
+In case of available notes that don't attend the value
+
+Scenario: 
+- Available Notes: `[50, 10]`
+- Response
+
+```
+{
+  "Reason": "Withdrawal not supported for value, left over: 5"
+}
+``` 
