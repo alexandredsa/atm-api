@@ -20,6 +20,7 @@ func CreateWithdrawalController(banknoteDataService services.BanknoteDataService
 func (w *WithdrawalController) New(ctx *gin.Context) {
 	payload := dtos.WithdrawalNewRequest{}
 	ctx.ShouldBind(&payload)
+
 	banknotes, err := w.BanknoteDataService.Withdrawal(payload.Value)
 
 	if err != nil {
